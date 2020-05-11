@@ -1,7 +1,11 @@
-package com.github.steven.tdd;
+package com.github.steven.tdd.ch02;
 
 import java.util.Arrays;
 import java.util.List;
+
+import com.github.steven.tdd.ch02.FriendsCollection;
+import com.github.steven.tdd.ch02.FriendshipsMongo;
+import com.github.steven.tdd.ch02.Person;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

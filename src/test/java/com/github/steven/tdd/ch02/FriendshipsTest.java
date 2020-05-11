@@ -1,9 +1,11 @@
-package com.github.steven.tdd;
+package com.github.steven.tdd.ch02;
 
 import org.junit.*;
 
 import java.util.Arrays;
 import java.util.List;
+
+import com.github.steven.tdd.ch02.Friendships;
 
 public class FriendshipsTest {
 

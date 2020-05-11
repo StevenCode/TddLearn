@@ -1,4 +1,6 @@
-package com.github.steven.tdd;
+package com.github.steven.tdd.ch02;
+
+import com.github.steven.tdd.ch02.Friendships;
 
 import org.junit.Test;
 

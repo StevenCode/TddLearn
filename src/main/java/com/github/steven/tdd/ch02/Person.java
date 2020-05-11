@@ -1,4 +1,4 @@
-package com.github.steven.tdd;
+package com.github.steven.tdd.ch02;
 
 import java.util.ArrayList;
 import java.util.List;
