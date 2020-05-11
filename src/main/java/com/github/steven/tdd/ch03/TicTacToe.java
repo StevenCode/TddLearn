@@ -7,11 +7,13 @@ package com.github.steven.tdd.ch03;
  */
 public class TicTacToe {
     private Character[][] board = {{'\0', '\0', '\0'}, {'\0', '\0', '\0'}, {'\0', '\0', '\0'}};
+    private char lastPlayer = '\0';
 
     public void play(int x, int y) {
         checkAxis(x);
         checkAxis(y);
         setBox(x, y);
+        lastPlayer = nextPlay();
     }
 
     private void checkAxis(int axis) {
@@ -26,5 +28,12 @@ public class TicTacToe {
         }else {
             board[x - 1][y - 1] = 'X';
         }
+    }
+
+    public char nextPlay() {
+        if (lastPlayer == 'X') {
+            return 'O';
+        }
+        return 'X';
     }
 }
