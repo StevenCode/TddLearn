@@ -1,5 +1,8 @@
 package com.github.steven.tdd.ch04;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Location.
  *
@@ -46,13 +49,68 @@ public class Location {
     }
 
     public boolean forward() {
-        move(FORWARD);
-        return true;
+        return move(FORWARD, new Point(50, 50), new ArrayList<>());
+    }
+    public boolean forward(Point max) {
+        return move(FORWARD, max, new ArrayList<>());
+    }
+    public boolean forward(Point max, List<Point> obstacles) {
+        return move(FORWARD, max, obstacles);
     }
 
     public boolean backward() {
-        move(BACKWARD);
-        return true;
+        return move(BACKWARD, new Point(50, 50), new ArrayList<>());
+    }
+    public boolean backward(Point max) {
+        return move(BACKWARD, max, new ArrayList<>());
+    }
+    public boolean backward(Point max, List<Point> obstacles) {
+        return move(BACKWARD, max, obstacles);
+    }
+
+    private boolean move(int fw, Point max, List<Point> obstacles) {
+        int x = point.getX();
+        int y = point.getY();
+        switch(getDirection()) {
+            case NORTH:
+                y = wrap(getY() - fw, max.getY());
+                break;
+            case SOUTH:
+                y = wrap(getY() + fw, max.getY());
+                break;
+            case EAST:
+                x = wrap(getX() + fw, max.getX());
+                break;
+            case WEST:
+                x = wrap(getX() - fw, max.getX());
+                break;
+        }
+        if (isObstacle(new Point(x, y), obstacles)) {
+            return false;
+        } else {
+            point = new Point(x, y);
+            return true;
+        }
+    }
+
+    private boolean isObstacle(Point point, List<Point> obstacles) {
+        for (Point obstacle : obstacles) {
+            if (obstacle.getX() == point.getX() && obstacle.getY() == point.getY()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int wrap(int point, int maxPoint) {
+        if (maxPoint > 0) {
+            if (point > maxPoint) {
+                return 1;
+            } else if (point == 0) {
+                return maxPoint;
+            }
+        }
+        return point;
     }
 
     public void turnLeft() {
@@ -61,26 +119,6 @@ public class Location {
 
     public void turnRight() {
         this.direction = direction.turnRight();
-    }
-
-    private boolean move(int fw) {
-        int x = getX();
-        int y = getY();
-        switch (direction) {
-            case EAST:
-                point.setX(x + fw);
-                break;
-            case WEST:
-                point.setX(x - fw);
-                break;
-            case NORTH:
-                point.setY(y - fw);
-                break;
-            case SOUTH:
-                point.setY(y + fw);
-                break;
-        }
-        return true;
     }
 
     @Override

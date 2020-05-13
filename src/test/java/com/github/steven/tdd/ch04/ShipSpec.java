@@ -13,11 +13,14 @@ public class ShipSpec {
 
     private Ship ship;
     private Location location;
+    private Planet planet;
 
     @BeforeMethod
     public void beforeTest() {
+        Point max = new Point(50, 50);
         location = new Location(new Point(21, 13), Direction.NORTH);
-        ship = new Ship(location);
+        planet = new Planet(max);
+        ship = new Ship(location, planet);
     }
 
     public void givenNorthWhenMoveForwardThenYDecreases() {
@@ -74,5 +77,12 @@ public class ShipSpec {
         expected.backward();
         ship.receiveCommands("rflb");
         assertEquals(ship.getLocation(), expected);
+    }
+
+    public void overpassEastBoundary() {
+        location.setDirection(Direction.EAST);
+        location.getPoint().setX(planet.getMax().getX());
+        ship.receiveCommands("f");
+        assertEquals(location.getX(), 1);
     }
 }
