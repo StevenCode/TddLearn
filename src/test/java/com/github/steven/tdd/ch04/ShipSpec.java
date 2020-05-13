@@ -11,9 +11,23 @@ import static org.testng.Assert.*;
 @Test
 public class ShipSpec {
 
-    public void whenInstantiatedThenLocationIsSet() {
-        Location location = new Location(new Point(21, 13), Direction.NORTH);
-        Ship ship = new Ship(location);
-        assertEquals(ship.getLocation(), location);
+    private Ship ship;
+    private Location location;
+
+    @BeforeMethod
+    public void beforeTest() {
+        location = new Location(new Point(21, 13), Direction.NORTH);
+        ship = new Ship(location);
+    }
+
+    public void givenNorthWhenMoveForwardThenYDecreases() {
+        ship.moveForward();
+        assertEquals(ship.getLocation().getPoint().getY(),12);
+    }
+
+    public void givenEastWhenMoveForwardThenXIncrease() {
+        ship.getLocation().setDirection(Direction.EAST);
+        ship.moveForward();
+        assertEquals(ship.getLocation().getPoint().getX(),22);
     }
 }

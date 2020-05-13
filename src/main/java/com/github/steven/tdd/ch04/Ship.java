@@ -6,7 +6,7 @@ package com.github.steven.tdd.ch04;
  * @author shidingfeng
  */
 public class Ship {
-    private Location location;
+    private final Location location;
 
     public Ship(Location location) {
         this.location = location;
@@ -16,7 +16,8 @@ public class Ship {
         return location;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public boolean moveForward() {
+        location.forward();
+        return true;
     }
 }
