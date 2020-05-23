@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.isEmptyString;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertFalse;
@@ -116,12 +117,23 @@ public class Connect4TDDSpec {
     }
 
     @Test
-    public void
-    whenNoDiscCanBeIntroducedTheGamesIsFinished() {
+    public void whenNoDiscCanBeIntroducedTheGamesIsFinished() {
         for (int row = 0; row < 6; row++)
             for (int column = 0; column < 7; column++)
                 tested.putDiscInColumn(column);
         assertTrue("The game must be finished",
                 tested.isFinished());
+    }
+
+    @Test
+    public void when4VerticalDiscsAreConnectedThenPlayerWins() {
+        for (int row = 0; row < 3; row++) {
+            tested.putDiscInColumn(1); // R
+            tested.putDiscInColumn(2); // G
+        }
+        assertThat(tested.getWinner(),
+                isEmptyString());
+        tested.putDiscInColumn(1); // R
+        assertThat(tested.getWinner(), is("R"));
     }
 }
