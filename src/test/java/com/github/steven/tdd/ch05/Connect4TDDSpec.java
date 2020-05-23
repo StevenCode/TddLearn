@@ -136,4 +136,39 @@ public class Connect4TDDSpec {
         tested.putDiscInColumn(1); // R
         assertThat(tested.getWinner(), is("R"));
     }
+
+    @Test
+    public void when4HorizontalDiscsAreConnectedThenThatPlayerWins() {
+        int column;
+        for (column = 0; column < 3; column++) {
+            tested.putDiscInColumn(column); // R
+            tested.putDiscInColumn(column); // G
+        }
+        assertThat(tested.getWinner(), isEmptyString());
+        tested.putDiscInColumn(column); // R
+        assertThat(tested.getWinner(), is("R"));
+    }
+
+    /*
+     * If a player inserts a disc and connects more than 3 discs of his colour
+     * in a straight diagonal line then that player wins
+     */
+
+    @Test
+    public void when4Diagonal1DiscsAreConnectedThenThatPlayerWins() {
+        int[] gameplay = new int[] {1, 2, 2, 3, 4, 3, 3, 4, 4, 5, 4};
+        for (int column : gameplay) {
+            tested.putDiscInColumn(column);
+        }
+        assertThat(tested.getWinner(), is("R"));
+    }
+
+    @Test
+    public void when4Diagonal2DiscsAreConnectedThenThatPlayerWins() {
+        int[] gameplay = new int[] {3, 4, 2, 3, 2, 2, 1, 1, 1, 1};
+        for (int column : gameplay) {
+            tested.putDiscInColumn(column);
+        }
+        assertThat(tested.getWinner(), is("G"));
+    }
 }
