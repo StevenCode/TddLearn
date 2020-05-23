@@ -1,6 +1,7 @@
 package com.github.steven.tdd.ch05;
 
 import java.util.Arrays;
+import java.util.Scanner;
 import java.util.StringJoiner;
 import java.util.regex.Pattern;
 
@@ -50,6 +51,8 @@ public class Connect4 {
             int numOfDiscs = getNumberOfDiscsInColumn(column - 1);
             if (numOfDiscs < ROWS) {
                 board[column - 1][numOfDiscs] = currentPlayer;
+                printBoard();
+                checkWinCondition(column - 1, numOfDiscs);
                 switchPlayer();
             }else {
                 System.out.println(numOfDiscs);
@@ -155,6 +158,15 @@ public class Connect4 {
             winner = currentPlayer;
             System.out.println(currentPlayer +
                     " wins");
+        }
+    }
+
+    public static void main(String[] args) {
+        Connect4 game = new Connect4();
+        Scanner scanner = new Scanner(System.in);
+        while (!game.isFinished()) {
+            System.out.println("Where do the next disc should be placed?");
+            game.putDisc(scanner.nextInt());
         }
     }
 }
