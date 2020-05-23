@@ -96,4 +96,8 @@ public class Connect4TDD {
                     .println(stringJoiner.toString());
         }
     }
+
+    public boolean isFinished() {
+        return getNumberOfDiscs() == ROWS * COLUMNS;
+    }
 }
