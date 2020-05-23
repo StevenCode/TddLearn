@@ -1,5 +1,9 @@
 package com.github.steven.tdd.ch05;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -7,6 +11,7 @@ import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.StringContains.containsString;
 
 /**
  * Connect4TDDSpec.
@@ -20,9 +25,12 @@ public class Connect4TDDSpec {
 
     private Connect4TDD tested;
 
+    private OutputStream output;
+
     @Before
     public void beforeEachTest() {
-        tested = new Connect4TDD();
+        output = new ByteArrayOutputStream();
+        tested = new Connect4TDD(new PrintStream(output));
     }
 
     @Test
@@ -84,5 +92,18 @@ public class Connect4TDDSpec {
         int column = 1;
         tested.putDiscInColumn(column);
         assertThat(tested.getCurrentPlayer(), is("G"));
+    }
+
+    @Test
+    public void whenAskedForCurrentPlayerThenOutputNotice() {
+        tested.getCurrentPlayer();
+        assertThat(output.toString(), containsString("Player R turn"));
+    }
+
+    @Test
+    public void whenADiscIsIntroducedTheBoardIsPrinted() {
+        int column = 1;
+        tested.putDiscInColumn(column);
+        assertThat(output.toString(), containsString("| |R| | | | | |"));
     }
 }

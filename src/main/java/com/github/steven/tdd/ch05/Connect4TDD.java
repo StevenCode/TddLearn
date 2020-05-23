@@ -1,7 +1,10 @@
 package com.github.steven.tdd.ch05;
 
+import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.StringJoiner;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * Connect4TDD.
@@ -20,11 +23,16 @@ public class Connect4TDD {
 
     private static final String RED = "R";
 
+    private static final String DELIMITER = "|";
+
     private String currentPlayer = RED;
 
     private String[][] board = new String[ROWS][COLUMNS];
 
-    public Connect4TDD() {
+    private PrintStream outputChannel;
+
+    public Connect4TDD(PrintStream out) {
+        outputChannel = out;
         for (String[] row : board) {
             Arrays.fill(row, EMPTY);
         }
@@ -44,7 +52,8 @@ public class Connect4TDD {
         checkColumn(column);
         int row = getNumberOfDiscsInColumn(column);
         checkPositionToInsert(row, column);
-        board[row][column] = "X";
+        board[row][column] = currentPlayer;
+        printBoard();
         switchPlayer();
         return row;
     }
@@ -62,6 +71,8 @@ public class Connect4TDD {
     }
 
     public String getCurrentPlayer() {
+        outputChannel.printf("Player %s turn%n",
+                currentPlayer);
         return currentPlayer;
     }
 
@@ -70,6 +81,19 @@ public class Connect4TDD {
             currentPlayer = GREEN;
         }else {
             currentPlayer = RED;
+        }
+    }
+
+    private void printBoard() {
+        for (int row = ROWS - 1; row >= 0; row--) {
+            StringJoiner stringJoiner =
+                    new StringJoiner(DELIMITER,
+                            DELIMITER,
+                            DELIMITER);
+            Stream.of(board[row])
+                    .forEachOrdered(stringJoiner::add);
+            outputChannel
+                    .println(stringJoiner.toString());
         }
     }
 }
