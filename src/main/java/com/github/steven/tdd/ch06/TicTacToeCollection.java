@@ -25,4 +25,9 @@ public class TicTacToeCollection {
     public MongoCollection getMongoCollection() {
         return mongoCollection;
     }
+
+    public boolean saveMove(TicTacToeBean bean) {
+        getMongoCollection().save(bean);
+        return true;
+    }
 }
