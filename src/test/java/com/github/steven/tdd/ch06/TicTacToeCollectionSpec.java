@@ -24,6 +24,7 @@ public class TicTacToeCollectionSpec {
         collection = spy(new TicTacToeCollection());
         mongoCollection = mock(MongoCollection.class);
         bean = new TicTacToeBean(3, 2, 1, 'Y');
+
     }
     @Test
     public void
@@ -93,4 +94,5 @@ public class TicTacToeCollectionSpec {
                 .getMongoCollection();
         assertFalse(collection.drop());
     }
+
 }
